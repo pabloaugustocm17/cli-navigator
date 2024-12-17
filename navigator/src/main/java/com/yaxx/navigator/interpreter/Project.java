@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Project {
 
-    public static void createProject(String folder){
+    public static void createProject(String folder) {
 
         String name;
         String description;
@@ -26,18 +26,21 @@ public class Project {
         System.out.print("Path: ");
         path = scanner.nextLine();
 
+        scanner.close();
+
         ProjectMetadata project_metadata = new ProjectMetadata(name, description, path);
 
         project_metadata.save(folder);
+
     }
 
-    public static void listProjects(String folder){
+    public static void listProjects(String folder) {
 
         File folder_system = new File(folder);
 
-        List<File> files = List.of(Objects.requireNonNull(folder_system.listFiles()));;
+        List<File> files = List.of(Objects.requireNonNull(folder_system.listFiles()));
 
-        for(File file : files){
+        for (File file : files) {
 
             Scanner scanner;
 
@@ -49,6 +52,8 @@ public class Project {
 
             String line = scanner.nextLine();
 
+            scanner.close();
+
             String[] line_split = line.split(";");
 
             String name = line_split[0];
@@ -58,7 +63,7 @@ public class Project {
 
             ProjectMetadata project_metadata = new ProjectMetadata(name, description, path, is_delete);
 
-            if(is_delete == 0){
+            if (is_delete == 0) {
                 System.out.println();
                 project_metadata.show();
             }
@@ -66,13 +71,14 @@ public class Project {
         }
     }
 
-    public static void enterProject(String folder, String name_project){
+    public static void enterProject(String folder, String name_project) {
 
         File folder_system = new File(folder);
 
-        List<File> files = List.of(Objects.requireNonNull(folder_system.listFiles()));;
+        List<File> files = List.of(Objects.requireNonNull(folder_system.listFiles()));
+        ;
 
-        for(File file : files){
+        for (File file : files) {
 
             Scanner scanner;
 
@@ -82,11 +88,13 @@ public class Project {
                 throw new RuntimeException(e);
             }
 
-            if(!file.getName().replaceAll(".txt", "").equals(name_project)){
+            if (!file.getName().replaceAll(".txt", "").equals(name_project)) {
                 continue;
             }
 
             String line = scanner.nextLine();
+
+            scanner.close();
 
             String[] line_split = line.split(";");
 
@@ -97,12 +105,16 @@ public class Project {
 
             ProjectMetadata project_metadata = new ProjectMetadata(name, description, path, is_delete);
 
-            if(is_delete == 1){
+            if (is_delete == 1) {
                 return;
             }
 
             project_metadata.enter();
         }
+
+    }
+
+    public static void deleteProject(String folder, String name_project) {
 
     }
 }

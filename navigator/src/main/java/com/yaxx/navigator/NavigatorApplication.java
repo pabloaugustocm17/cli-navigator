@@ -14,56 +14,66 @@ public class NavigatorApplication {
 
 		Hashtable<String, Method> table_metadata = metadata.createOptionsMetadata();
 
-		//Scanner scan = new Scanner(System.in);
-
 		String enter_line = args[0];
 
-		//while (!enter_line.contains("-q")){
+		if (enter_line.equals("-c")) {
 
-			//enter_line = enter_line.replace("nv", "").trim();
+			executeCommandWithOneParam("createProject", metadata.FOLDER_PROJECTS, table_metadata);
 
-			if(enter_line.equals("-c")){
+			return;
+		}
 
-				String command = "createProject";
+		if (enter_line.equals("-l")) {
 
-				Method method = table_metadata.get(command);
+			executeCommandWithOneParam("listProject", metadata.FOLDER_PROJECTS, table_metadata);
 
-				try{
-					method.invoke(Project.class, metadata.FOLDER_PROJECTS);
-				}catch (Exception e){
-					System.out.println(e.getMessage());
-				}
-			}
+			return;
+		}
 
-			if(enter_line.equals("-l")){
+		if (enter_line.contains("-e")) {
 
-				String command = "listProjects";
+			String params[] = new String[2];
 
-				Method method = table_metadata.get(command);
+			params[0] = metadata.FOLDER_PROJECTS;
+			params[1] = args[1];
 
-				try{
-					method.invoke(Project.class, metadata.FOLDER_PROJECTS);
-				}catch (Exception e){
-					System.out.println(e.getMessage());
-				}
+			executeCommandWithTwoParam("enterProject", params, table_metadata);
 
-			}
+			return;
+		}
 
-			if(enter_line.contains("-e")){
-				String command = "enterProject";
+		if (enter_line.contains("-d")) {
 
-				Method method = table_metadata.get(command);
+			String params[] = new String[2];
 
-				String name_project = args[1];
+			params[0] = metadata.FOLDER_PROJECTS;
+			params[1] = args[1];
 
-				try{
-					method.invoke(Project.class, metadata.FOLDER_PROJECTS, name_project);
-				}catch (Exception e){
-					System.out.println("Error invoke: " + e.getMessage());
-				}
-			}
+			executeCommandWithTwoParam("deleteProject", params, table_metadata);
 
-			//enter_line = scan.nextLine();
-		//}
+			return;
+		}
+	}
+
+	private static void executeCommandWithOneParam(String command, String param, Hashtable<String, Method> table) {
+
+		Method method = table.get(command);
+
+		try {
+			method.invoke(Project.class, param);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void executeCommandWithTwoParam(String command, String[] params, Hashtable<String, Method> table) {
+
+		Method method = table.get(command);
+
+		try {
+			method.invoke(Project.class, params[0], params[1]);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

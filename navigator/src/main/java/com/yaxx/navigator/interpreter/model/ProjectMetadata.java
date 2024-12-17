@@ -31,13 +31,13 @@ public class ProjectMetadata {
         is_delete = 0;
     }
 
-    public void save(String folder){
+    public void save(String folder) {
 
         String path = folder + File.separator + this.name + ".txt";
 
         boolean is_file_exists = FileUtils.isFileExist(path);
 
-        if(is_file_exists){
+        if (is_file_exists) {
             System.out.println("Project: " + this.name + " already exists");
             return;
         }
@@ -52,26 +52,26 @@ public class ProjectMetadata {
 
         BufferedWriter buf = new BufferedWriter(writer);
 
-        try{
+        try {
             buf.write(this.name + ";" + this.description + ";" + this.path + ";" + this.is_delete);
 
             buf.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void delete(){
+    public void delete() {
 
     }
 
-    public void show(){
+    public void show() {
         System.out.println("Name: " + name);
         System.out.println("Description: " + description);
         System.out.println("Path: " + path);
     }
 
-    public void enter(){
+    public void enter() {
 
         System.out.println("Enter: " + this.path);
 
@@ -85,12 +85,11 @@ public class ProjectMetadata {
 
             Process process = builder.start();
 
-            int exit = process.waitFor();
+            process.waitFor();
 
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
-
 
     }
 }

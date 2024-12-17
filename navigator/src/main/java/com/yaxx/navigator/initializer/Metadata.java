@@ -14,7 +14,7 @@ public class Metadata {
 
     public final String LOG_PROJECTS;
 
-    public Metadata(){
+    public Metadata() {
 
         FOLDER_METADATA = System.getenv("USERPROFILE") + File.separator + "navigator_metadata";
         FOLDER_PROJECTS = FOLDER_METADATA + File.separator + "projects";
@@ -23,20 +23,20 @@ public class Metadata {
         verifyProjectFolder();
     }
 
-    public Hashtable<String, Method> createOptionsMetadata(){
+    public Hashtable<String, Method> createOptionsMetadata() {
 
         Hashtable<String, Method> table = new Hashtable<>(4);
 
         Class<?> claz = Project.class;
 
-        for(Method method: claz.getMethods()){
+        for (Method method : claz.getMethods()) {
             table.put(method.getName(), method);
         }
 
         return table;
     }
 
-    public void verifyProjectFolder(){
+    public void verifyProjectFolder() {
 
         File dir_metadata = new File(FOLDER_METADATA);
 
@@ -44,40 +44,22 @@ public class Metadata {
 
         File log_projects = new File(LOG_PROJECTS);
 
-        int is_create = isCreateFolder(dir_metadata);
+        createFolder(dir_metadata);
 
-        //interpreterCreation(is_create);
+        createFolder(dir_projects);
 
-        is_create = isCreateFolder(dir_projects);
-
-        //interpreterCreation(is_create);
-
-        is_create = isCreateFolder(log_projects);
-
-        //interpreterCreation(is_create);
+        createFolder(log_projects);
     }
 
-    private int isCreateFolder(File dir){
+    private void createFolder(File dir) {
 
-        if(dir.exists()) return 0;
+        if (dir.exists())
+            return;
 
-        int is_create = -1;
-
-        try{
-            is_create = dir.mkdir() ? 1 : -1;
-        }catch (Exception e){
+        try {
+            dir.mkdir();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        return is_create;
     }
-
-    /*private void interpreterCreation(int is_create){
-
-        switch (is_create) {
-            case 0 -> System.out.println("Folder Exists");
-            case 1 -> System.out.println("Create success");
-            case -1 -> System.out.println("Error on create folder");
-        }
-    }*/
 }
