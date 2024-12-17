@@ -26,7 +26,8 @@ java -jar "C:\...\navigator.jar" %*
 ```
 
 5. Adicionar nas variáveis de ambiente do sistema o caminho para a pasta *bin*
-5.1. Em *Windows* basta pesquisar por *Editar as variáveis de ambiente do sistema* > *Variáveis de ambiente* > *Path* e colocar o caminho.
+
+Em *Windows* basta pesquisar por *Editar as variáveis de ambiente do sistema* > *Variáveis de ambiente* > *Path* e colocar o caminho.
 
 
 ## Funcionalidades
